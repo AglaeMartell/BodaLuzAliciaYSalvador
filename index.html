@@ -401,6 +401,12 @@
     transition:background 0.3s;
   }
   .gift-btn:hover{ background:#d1554a; }
+  .gift-section{
+  padding-top:28px;
+  padding-bottom:28px;
+}
+.gift-section--first{ padding-top:90px; }
+.gift-section--last{ padding-bottom:90px; }
 
   #rsvp-success{
     display:none;
@@ -648,7 +654,7 @@
     <p>Nos encantaría verte elegante en un día tan especial.</p>
   </section>
 
-  <section id="gifts">
+    <section id="gifts" class="gift-section gift-section--first">
     <svg class="gift-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
       <rect x="8" y="26" width="48" height="30" rx="3" fill="var(--coral-pale)"/>
       <rect x="8" y="26" width="48" height="10" fill="var(--coral)"/>
@@ -659,20 +665,19 @@
     <div class="eyebrow">Mesa de regalos</div>
     <h2>Liverpool</h2>
     <p>Tu presencia es el mejor regalo, pero si deseas tener un detalle con nosotros, puedes encontrarnos en nuestra mesa de regalos Liverpool.</p>
-    <a class="gift-btn" href="#" target="_blank" rel="noopener">Ver mesa de regalos</a>
+    <a class="gift-btn" href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/60021348" target="_blank" rel="noopener">Ver mesa de regalos</a>
   </section>
 
-    <section id="gifts">
-    <svg class="gift-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-      <rect x="8" y="26" width="48" height="30" rx="3" fill="var(--coral-pale)"/>
-      <rect x="8" y="26" width="48" height="10" fill="var(--coral)"/>
-      <rect x="28" y="26" width="8" height="30" fill="var(--coral-deep)"/>
-      <path d="M32 26 C22 26 18 20 20 15 C22 10 30 12 32 20 C34 12 42 10 44 15 C46 20 42 26 32 26 Z"
-            fill="none" stroke="var(--coral-deep)" stroke-width="2.5" stroke-linejoin="round"/>
-    </svg>
+  <section class="gift-section">
     <div class="eyebrow">Mesa de regalos</div>
     <h2>Amazon</h2>
-    <a class="gift-btn" href="https://www.amazon.com.mx/wedding/guest-view/251I7702RV25I " target="_blank" rel="noopener">Ver mesa de regalos Amazon</a>
+    <a class="gift-btn" href="https://www.amazon.com.mx/wedding/guest-view/251I7702RV25I" target="_blank" rel="noopener">Ver mesa de regalos Amazon</a>
+  </section>
+
+  <section class="gift-section gift-section--last">
+    <div class="eyebrow">Mesa de regalos</div>
+    <h2>Sears</h2>
+    <a class="gift-btn" href="https://www.amazon.com.mx/wedding/guest-view/251I7702RV25I" target="_blank" rel="noopener">Ver mesa de regalos Sears</a>
   </section>
 
   <section id="rsvp">
