@@ -422,6 +422,22 @@
     color:#a33;
     font-size:0.85rem;
   }
+  .rsvp-closed-note{
+    margin:0 auto 30px;
+    padding:14px 18px;
+    border:1px dashed var(--coral);
+    background:var(--cream-deep);
+    color:var(--ink-soft);
+    font-size:0.85rem;
+    line-height:1.6;
+    text-align:center;
+  }
+  #rsvp-demo-msg{
+    display:none;
+    text-align:center;
+    color:var(--coral-deep);
+    font-size:0.85rem;
+  }
 
   /* ---------- footer ---------- */
   footer{
@@ -684,6 +700,7 @@
     <div class="eyebrow">Confirma tu asistencia</div>
     <h2>Te esperamos</h2>
     <p class="rsvp-sub">Por favor confirma antes del 12 de septiembre de 2026.</p>
+    <p class="rsvp-closed-note">Este formulario ya no está activo porque el evento ya se realizó. Se conserva solo como muestra visual; no se envía ni guarda ninguna información.</p>
 
     <form id="rsvp-form">
       <div>
@@ -710,10 +727,8 @@
       </div>
 
       <button type="submit" id="submit-btn">Confirmar asistencia</button>
-      <div id="rsvp-error">Hubo un problema al enviar tu confirmación. Intenta de nuevo.</div>
+      <div id="rsvp-demo-msg">Versión de muestra: el formulario está desactivado y no se envió ningún dato.</div>
     </form>
-
-    <div id="rsvp-success">Gracias — tu confirmación fue recibida con mucho cariño. 🐚</div>
   </section>
 
   <footer>
@@ -880,16 +895,12 @@
   audio.addEventListener('play', () => setPlayingUI(true));
 })();
 
-// ---------- RSVP form ----------
+// ---------- RSVP form (solo demostración, sin envío) ----------
 (function(){
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbzPo0a66we0jQ9yn0FKuPI9XEOA4A1J_Oz8dHYfRB7UxQBGwfJDNZeDmo4UUWhbH4/exec';
-
   const form = document.getElementById('rsvp-form');
   const companionsWrap = document.getElementById('companions-wrap');
   const radios = form.querySelectorAll('input[name="attending"]');
-  const successMsg = document.getElementById('rsvp-success');
-  const errorMsg = document.getElementById('rsvp-error');
-  const submitBtn = document.getElementById('submit-btn');
+  const demoMsg = document.getElementById('rsvp-demo-msg');
 
   function updateCompanionsVisibility(){
     const attending = form.querySelector('input[name="attending"]:checked').value;
@@ -898,54 +909,9 @@
   radios.forEach(r => r.addEventListener('change', updateCompanionsVisibility));
   updateCompanionsVisibility();
 
-  form.addEventListener('submit', async function(e){
+  form.addEventListener('submit', function(e){
     e.preventDefault();
-    errorMsg.style.display = 'none';
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Enviando...';
-
-    const name = document.getElementById('name').value.trim();
-    const attending = form.querySelector('input[name="attending"]:checked').value;
-    const companions = attending === 'si' ? (document.getElementById('companions').value || '0') : '0';
-    const message = document.getElementById('message').value.trim();
-
-    const entry = {
-      name, attending, companions, message,
-      submittedAt: new Date().toISOString()
-    };
-
-    // Respaldo local por si el envío a Google Sheets falla o no hay conexión
-    try{
-      const key = `rsvp_${Date.now()}`;
-      localStorage.setItem(key, JSON.stringify(entry));
-    } catch(storageErr){
-      console.warn('No se pudo guardar el respaldo local:', storageErr);
-    }
-
-    try{
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('attending', attending);
-      formData.append('companions', companions);
-      formData.append('message', message);
-
-      // Apps Script no permite leer la respuesta desde otro origen (CORS),
-      // así que enviamos en modo "no-cors": el envío sí llega y se guarda,
-      // simplemente no podemos leer la confirmación de vuelta.
-      await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData
-      });
-
-      form.style.display = 'none';
-      successMsg.style.display = 'block';
-    } catch(err){
-      console.error('RSVP submit error:', err);
-      errorMsg.style.display = 'block';
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Confirmar asistencia';
-    }
+    demoMsg.style.display = 'block';
   });
 })();
 </script>
